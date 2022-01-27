@@ -1,16 +1,13 @@
-# solidity_flutter
+# Logistic Chain System
+# Front-end: Flutter
+# Back-end: Ethereum Blockchain system
 
-A new Flutter project.
+# This project utilized the Blockchain system to make a decentralized application for other users to use it.
 
-## Getting Started
+Tools used:
+1. Metamask
+2. Infura
+3. Ropsten
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+![flutter_02](https://user-images.githubusercontent.com/25504609/151293927-716af4f1-4a92-4b36-ad95-1596a1fb0ec8.png)
+![flutter_04](https://user-images.githubusercontent.com/25504609/151293937-f6209e4b-a254-4f30-bcc7-03687b7ebfe4.png)
