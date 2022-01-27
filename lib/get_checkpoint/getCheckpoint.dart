@@ -14,15 +14,20 @@ class GetCheckpointsWidget extends StatefulWidget {
 }
 
 class _GetCheckpointsWidgetState extends State<GetCheckpointsWidget> {
-  TextEditingController itemId = TextEditingController();
+  TextEditingController itemId = TextEditingController(); //gather user input
+  //initialisation
   late Client httpClient;
   late Web3Client ethClient;
   bool data = false;
   late var myData;
+
+  //sample address using metamask
   final String myAddress = '0x57FC2415edaB478B0B9e7B5A93A1930064205776';
+  //using ropsten as the testnet
   final String blockchainUrl =
       'https://ropsten.infura.io/v3/379d8731e04f4b1eb4c5bba1726b0c94';
 
+  //get and set the myAddress and  blockchain url
   @override
   void initState() {
     super.initState();
@@ -30,35 +35,45 @@ class _GetCheckpointsWidgetState extends State<GetCheckpointsWidget> {
     ethClient = Web3Client(blockchainUrl, httpClient);
   }
 
+  //function to load the contract
   Future<DeployedContract> loadContract() async {
+    //load abi of the contract 'couriercompany'
     String abi = await rootBundle.loadString('assets/contract.json');
+    //sample contract address deployed on ropsten
     String contractAddress = '0xEB3741e05Cd22f44d6dC0Ba29FdE4CB44f90a1FD';
 
+    //get contract
     final contract = DeployedContract(
         ContractAbi.fromJson(abi, "CourierCompany"),
         EthereumAddress.fromHex(contractAddress));
-    //print(contract);
+    //print(contract); for  debugging
     return contract;
   }
 
+  //get specific function inside the contracts
   Future<List<dynamic>> query(String functionName, List<dynamic> args) async {
+    //get contract
     final contract = await loadContract();
+    //get functionname
     final ethFunction = contract.function(functionName);
+    //call the function inside the contract along with the arguments
     final result = await ethClient.call(
         contract: contract, function: ethFunction, params: args);
     return result;
   }
 
+  //use the function get checkpointsof
   Future<void> getCheckpointsOf(
       String callFunction, String myAddress, var itemId) async {
     List<dynamic> result =
         await query(callFunction, [BigInt.from(int.parse(itemId.text))]);
     myData = result[0];
-    print(myData);
-    data = true;
+    //print(myData); for debuggin
+    data = true; //finish loading
     setState(() {});
   }
 
+  //buidling the user interface
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -70,9 +85,10 @@ class _GetCheckpointsWidgetState extends State<GetCheckpointsWidget> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                CustomTextField(itemId),
+                CustomTextField(itemId), //make custom user input
                 ElevatedButton(
                   onPressed: () {
+                    //call function getcheckpointsof, using my address and itemid as the input
                     getCheckpointsOf("getCheckpointsOf", myAddress, itemId);
                   },
                   child: const Text('Track Item'),
@@ -80,9 +96,10 @@ class _GetCheckpointsWidgetState extends State<GetCheckpointsWidget> {
               ],
             ),
           ),
-          data
+          data //loading
               ? Expanded(
                   child: ListView.builder(
+                    //build the list based on myData.length
                     itemCount: myData.length,
                     itemBuilder: (context, index) {
                       return Container(
@@ -96,6 +113,7 @@ class _GetCheckpointsWidgetState extends State<GetCheckpointsWidget> {
                                 child: Column(
                                   children: [
                                     Text(
+                                      //convert epoch to real time
                                       'Timestamp: ' + (index + 1).toString(),
                                       style: TextStyle(
                                           color:
@@ -124,6 +142,7 @@ class _GetCheckpointsWidgetState extends State<GetCheckpointsWidget> {
                                   margin: const EdgeInsets.fromLTRB(5, 5, 5, 5),
                                   child: Column(
                                     children: [
+                                      //display all the details
                                       Text(
                                         'Status:',
                                         style: TextStyle(

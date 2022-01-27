@@ -37,16 +37,19 @@ class _MyHomePageState extends State<MyHomePage> {
       length: 2,
       child: Scaffold(
           appBar: AppBar(
+            //the appbar
             title: const Text('Courier Company Smart Contract.'),
-            centerTitle: true,
-            elevation: 3,
+            centerTitle: true, //make the title centre
+            elevation: 3, //state the elevation of the app bar
             bottom: const TabBar(tabs: [
-              Tab(child: Text('Item Details')),
-              Tab(child: Text('Track Item')),
+              Tab(child: Text('Item Details')), // caption of the tab
+              Tab(child: Text('Track Item')), // caption of the tab
             ]),
           ),
-          body:
-              TabBarView(children: [GetItemDetails(), GetCheckpointsWidget()])),
+          body: TabBarView(children: [
+            GetItemDetails(), //item details custom widget
+            const GetCheckpointsWidget() // get checkpoint custom widget
+          ])),
     );
   }
 }
