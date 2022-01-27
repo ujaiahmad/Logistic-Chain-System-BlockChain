@@ -39,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
           appBar: AppBar(
             //the appbar
             title: const Text('Courier Company Smart Contract.'),
-            centerTitle: true, //make the title centre
+            centerTitle: true, //make the title centre true
             elevation: 3, //state the elevation of the app bar
             bottom: const TabBar(tabs: [
               Tab(child: Text('Item Details')), // caption of the tab
